@@ -14,9 +14,13 @@ program
     .option('-m, --max-chunks <maxChunks>', 'Max number of chunks to download')
     .action((fileUrl, cmd) => {
         speedyDownload((fileUrl), {
-            chunkSize: Number(cmd.chunkSize),
-            maxChunks: Number(cmd.maxChunks),
+            // defaulting to undefined is strange but it lets me use proper defaults if
+            // a user passes an invalid option (e.g. a string for chunkSize or maxChunks)
+            chunkSize: Number(cmd.chunkSize) || undefined,
+            maxChunks: Number(cmd.maxChunks) || undefined,
             outputFilename: cmd.outputFile
+        }).catch((err) => {
+            console.error(err);
         });
     });
 

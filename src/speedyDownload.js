@@ -1,5 +1,6 @@
 const fs = require('fs');
 const axios = require('axios');
+const StreamConcat = require('stream-concat');
 
 // make a call for zero bytes just to read the total size of the file
 // could download the first chunk here but this seemed cleaner even though it's slower
@@ -12,12 +13,16 @@ function getFileSize(fileUrl) {
         if (!response.headers['content-range']) {
             throw new Error('No content-range header found');
         }
+
         const contentRange = response.headers['content-range'].split('/');
+
         // range should be in format 'bytes 0-1/22849'
         if (contentRange.length !== 2) {
             throw new Error(`content-range header "${response.headers['content-range']}" is not correctly formatted`);
         }
         return Number(contentRange[1]);
+    }).catch((err) => {
+        throw new Error(`Error fetching file: ${err.response.status}`);
     });
 }
 
@@ -48,27 +53,18 @@ function makePromises(fileUrl, fileSize, chunkSize, maxChunks = 0) {
 // pipe stream to the specified output file
 function saveFile(responses, outputFilename) {
     const writeStream = fs.createWriteStream(outputFilename);
+    const streams = responses.map(resp => resp.data);
+    const combinedStream = new StreamConcat(streams);
 
-    responses.forEach((resp) => {
-        resp.data.pipe(writeStream);
-    });
+    combinedStream.pipe(writeStream);
 }
 
-function speedyDownload(fileUrl, options = {}) {
-    const {
-        chunkSize = 1024 * 1024, // 1 MiB
-        maxChunks = 0,
-        outputFilename = 'output.pdf'
-    } = options;
-
-    getFileSize(fileUrl)
+function speedyDownload(fileUrl, { chunkSize = 1024 * 1024, maxChunks = 0, outputFilename = 'output.pdf' }) {
+    return getFileSize(fileUrl)
         .then(fileSize => makePromises(fileUrl, fileSize, chunkSize, maxChunks))
         .then(responses => saveFile(responses, outputFilename))
         .then(() => {
             console.log(`File downloaded and saved as: ${outputFilename}`);
-        })
-        .catch((err) => { // eslint-disable-line
-            throw err;
         });
 }
 
