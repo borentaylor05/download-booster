@@ -21,7 +21,9 @@ Options
 
 ### Defaults
 `--output-file output.pdf`
+
 `--chunk-size 1048576 // 1024 * 1024 = 1 MiB`
+
 `--max-chunks output.pdf // 0 - ignored if zero`
 
 ## Examples
