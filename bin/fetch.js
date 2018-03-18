@@ -3,6 +3,7 @@
 const program = require('commander');
 
 const speedyDownload = require('../src/speedyDownload');
+const log = require('../src/log');
 
 program
     .version('0.0.1')
@@ -19,8 +20,10 @@ program
             chunkSize: Number(cmd.chunkSize) || undefined,
             maxChunks: Number(cmd.maxChunks) || undefined,
             outputFilename: cmd.outputFile
+        }).then((savedFileName) => {
+            log.success(`\nFile downloaded and saved as: ${savedFileName}\n`);
         }).catch((err) => {
-            console.error(err);
+            log.error(`${err}\n`);
         });
     });
 
