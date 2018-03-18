@@ -1,14 +1,11 @@
 {
-  "name": "download-booster",
-  "version": "1.0.0",
-  "description": "",
+  "name": "downloadbooster",
+  "version": "1.0.1",
+  "description": "Speed up file downloads by requesting chunks of the file in parallel.",
   "main": "index.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/borentaylor05/download-booster"
-  },
-  "scripts": {
-    "test": "npm test"
+    "type": "git",
+    "url": "https://github.com/borentaylor05/download-booster"
   },
   "author": "Taylor Boren",
   "license": "ISC",
@@ -19,7 +16,7 @@
     "stream-concat": "^0.2.0"
   },
   "bin": {
-    "download-booster": "./bin/fetch.js"
+    "downloadbooster": "./bin/fetch.js"
   },
   "devDependencies": {
     "eslint": "^4.19.0",
