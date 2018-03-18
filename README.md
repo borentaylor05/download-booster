@@ -6,7 +6,7 @@
 npm install -g download-booster
 ```
 
-## Usage
+## CLI Usage
 
 Command line options for the `fetch` command are:
 
@@ -26,7 +26,20 @@ Options
 
 `--max-chunks 0 // 0 - ignored if zero`
 
-## Examples
+## CommonJS Usage
+```javascript
+const downloadBooster = require('download-booster');
+
+const options = {
+    chunkSize: 1024 * 1024,
+    maxChunks: 20,
+    outputFilename: 'output.pdf'
+};
+
+downloadBooster('https://www.hrw.org/sites/default/files/reports/wr2010_0.pdf);
+```
+
+## CLI Examples
 
 Using default options
 ```
