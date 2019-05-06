@@ -13,7 +13,8 @@
     "axios": "^0.18.0",
     "chalk": "^2.3.2",
     "commander": "^2.15.0",
-    "stream-concat": "^0.2.0"
+    "stream-concat": "^0.2.0",
+    "snyk": "^1.161.1"
   },
   "bin": {
     "downloadbooster": "./bin/fetch.js"
@@ -24,5 +25,10 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
