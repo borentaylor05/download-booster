@@ -10,7 +10,7 @@
   "author": "Taylor Boren",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^1.6.3",
     "chalk": "^2.3.2",
     "commander": "^2.15.0",
     "stream-concat": "^0.2.0"
